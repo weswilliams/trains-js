@@ -24,11 +24,19 @@ describe('route', function() {
   });
 
   describe('with connection', function() {
+    var route1, route2;
+
+    beforeEach(function() {
+      route1 = routes.route('a', 'b', 6);
+      route2 = routes.route('b', 'c', 5);
+    });
+
     it('should calculate total distance', function() {
-      var route1 = routes.route('a', 'b', 6);
-      var route2 = routes.route('b', 'c', 5);
-      route1.connect_to(route2);
       expect(route1.connect_to(route2).distance()).toEqual(11);
+    });
+
+    it('displays origin, final destination and total distance', function() {
+      expect(route1.connect_to(route2).toString()).toEqual('ac11');
     });
   });
 });

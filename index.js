@@ -5,6 +5,7 @@ module.exports = function() {
         connection = {};
 
     connection.distance = function() { return 0; };
+    connection.final_destination = function() { return null; };
 
     route.origin = origin;
     route.destination = destination;
@@ -18,8 +19,12 @@ module.exports = function() {
       return route;
     };
 
+    route.final_destination = function() {
+      return connection.final_destination() || route.destination;
+    };
+
     route.toString = function() {
-      return route.origin.toString() + route.destination.toString() + route.distance().toString();
+      return route.origin.toString() + route.final_destination().toString() + route.distance().toString();
     };
 
     return route;
