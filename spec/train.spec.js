@@ -1,42 +1,35 @@
-var routes = require('../index.js')('ab3 bc4');
+var routes = require('../index.js')('ab3 bc4 cd5');
 
-describe('routes', function() {
+describe('direct routes with no connections', function() {
   it('finds exact route for ab', function() {
-    var route = routes.find_exact_route('a', 'b');
-    expect(route.toString()).toEqual('ab3');
+    expect(routes.find_exact_route('a', 'b').toString()).toEqual('ab3');
   });
 
   it('finds exact route for bc', function() {
-    var route = routes.find_exact_route('b', 'c');
-    expect(route.toString()).toEqual('bc4');
+    expect(routes.find_exact_route('b', 'c').toString()).toEqual('bc4');
   });
 
   it('returns NO SUCH ROUTE for non existent routs', function() {
-    var route = routes.find_exact_route('a', 'c');
-    expect(route.toString()).toEqual('NO SUCH ROUTE');
+    expect(routes.find_exact_route('a', 'c').toString()).toEqual('NO SUCH ROUTE');
   });
 });
 
 describe('route', function() {
   describe('with no connections', function() {
     it('have an origin', function() {
-      var route = routes.route('a');
-      expect(route.origin).toEqual('a');
+      expect(routes.route('a').origin).toEqual('a');
     });
 
     it('have a destination', function() {
-      var route = routes.route('a', 'b');
-      expect(route.destination).toEqual('b');
+      expect(routes.route('a', 'b').destination).toEqual('b');
     });
 
     it('have a distance', function() {
-      var route = routes.route('a', 'b', 6);
-      expect(route.distance()).toEqual(6);
+      expect(routes.route('a', 'b', 6).distance()).toEqual(6);
     });
 
     it('display origin, destination and distance', function() {
-      var route = routes.route('a','b',4);
-      expect(route.toString()).toEqual('ab4');
+      expect(routes.route('a','b',4).toString()).toEqual('ab4');
     });
   });
 
