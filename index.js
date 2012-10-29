@@ -4,15 +4,18 @@ module.exports = function(routes_to_map) {
 
   routes_to_map = routes_to_map || '';
 
-  routes.find_exact_route = function(origin, destination) {
+  routes.find_exact_route = function() {
+    var args = Array.prototype.slice.call(arguments);
+    var route_cities = args.map(function(name) {
+      return routes.city(name);
+    });
     var found = {
       toString: function() {
         return 'NO SUCH ROUTE';
       }
     };
-    origin = cities[origin];
-    destination = cities[destination];
-    return origin.exact_route_to(destination) || found;
+    origin = route_cities[0];
+    return origin.exact_route_to(route_cities.slice(1)) || found;
   };
 
   routes.route = function(origin, destination, distance) {
@@ -20,7 +23,9 @@ module.exports = function(routes_to_map) {
         connection = {};
 
     connection.distance = function() { return 0; };
+    connection.origins = function() { return ''; };
     connection.final_destination = function() { return null; };
+    connection.toString = function() { return 'end of the line'; };
 
     route.origin = origin;
     route.destination = destination;
@@ -30,8 +35,14 @@ module.exports = function(routes_to_map) {
     };
 
     route.connect_to = function(connecting_route) {
-      connection = connecting_route;
+      if (connecting_route !== null) {
+        connection = connecting_route;
+      }
       return route;
+    };
+
+    route.origins = function() {
+      return route.origin.toString() + connection.origins();
     };
 
     route.final_destination = function() {
@@ -39,7 +50,7 @@ module.exports = function(routes_to_map) {
     };
 
     route.toString = function() {
-      return route.origin.toString() + route.final_destination().toString() + route.distance().toString();
+      return route.origins() + route.final_destination().toString() + route.distance().toString();
     };
 
     return route;
@@ -68,11 +79,12 @@ module.exports = function(routes_to_map) {
       return city.name;
     };
 
-    city.exact_route_to = function(destination) {
-      var connection = connections[destination],
+    city.exact_route_to = function(destinations) {
+      var connection = connections[destinations[0]],
           route = null;
       if (connection !== undefined) {
         route = routes.route(city, connection.city, connection.distance);
+        route.connect_to(destinations[0].exact_route_to(destinations.slice(1)));
       }
       return route;
     };

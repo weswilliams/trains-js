@@ -1,6 +1,6 @@
 var routes = require('../index.js')('ab3 bc4 cd5');
 
-describe('direct routes with no connections', function() {
+describe('exact routes with no connections', function() {
   it('finds exact route for ab', function() {
     expect(routes.find_exact_route('a', 'b').toString()).toEqual('ab3');
   });
@@ -11,6 +11,13 @@ describe('direct routes with no connections', function() {
 
   it('returns NO SUCH ROUTE for non existent routs', function() {
     expect(routes.find_exact_route('a', 'c').toString()).toEqual('NO SUCH ROUTE');
+  });
+});
+
+
+describe('exact routes with connections', function() {
+  it('finds exact route for bcd', function() {
+    expect(routes.find_exact_route('b', 'c', 'd').toString()).toEqual('bcd9');
   });
 });
 
@@ -46,7 +53,7 @@ describe('route', function() {
     });
 
     it('displays origin, final destination and total distance', function() {
-      expect(route1.connect_to(route2).toString()).toEqual('ac11');
+      expect(route1.connect_to(route2).toString()).toEqual('abc11');
     });
   });
 });
