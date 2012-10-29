@@ -9,13 +9,13 @@ module.exports = function(routes_to_map) {
     var route_cities = args.map(function(name) {
       return routes.city(name);
     });
-    var found = {
+    var no_route = {
       toString: function() {
         return 'NO SUCH ROUTE';
       }
     };
     origin = route_cities[0];
-    return origin.exact_route_to(route_cities.slice(1)) || found;
+    return origin.exact_route_to(route_cities.slice(1)) || no_route;
   };
 
   routes.route = function(origin, destination, distance) {
