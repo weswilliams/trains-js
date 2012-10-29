@@ -1,5 +1,5 @@
 module.exports = function(routes_to_map) {
-  var routes = [],
+  var routes = {},
       cities = {};
 
   routes_to_map = routes_to_map || '';
@@ -90,7 +90,6 @@ module.exports = function(routes_to_map) {
         city: destination,
         distance: distance
       });
-      routes.push(routes.route(origin, destination, distance));
     });
   })(routes_to_map);
 
