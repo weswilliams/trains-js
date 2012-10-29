@@ -12,12 +12,7 @@ module.exports = function(routes_to_map) {
     };
     origin = cities[origin];
     destination = cities[destination];
-    routes.forEach(function(route) {
-      if (route.origin === origin && route.destination === destination) {
-        found = route;
-      }
-    });
-    return found;
+    return origin.exact_route_to(destination) || found;
   };
 
   routes.route = function(origin, destination, distance) {
@@ -59,24 +54,45 @@ module.exports = function(routes_to_map) {
     return found;
   };
 
+  var city = function(name) {
+    var city = {}, 
+        connections = {};
+
+    city.name = name;
+
+    city.add_connection = function(connection) {
+      connections[connection.city] = connection;
+    };
+
+    city.toString = function() {
+      return city.name;
+    };
+
+    city.exact_route_to = function(destination) {
+      var connection = connections[destination],
+          route = null;
+      if (connection !== undefined) {
+        route = routes.route(city, connection.city, connection.distance);
+      }
+      return route;
+    };
+
+    return city;
+  };
+
   (function(routes_to_map) {
     var route_pattern = /[a-zA-Z]{2}\d/g;
     routes_to_map.match(route_pattern).forEach(function(route_str) {
       var origin = routes.city(route_str.charAt(0)),
           destination = routes.city(route_str.charAt(1)),
           distance = parseInt(route_str.charAt(2), 10);
+      origin.add_connection({
+        city: destination,
+        distance: distance
+      });
       routes.push(routes.route(origin, destination, distance));
     });
   })(routes_to_map);
 
   return routes;
-};
-
-var city = function(name) {
-  var city = {};
-  city.name = name;
-  city.toString = function() {
-    return city.name;
-  };
-  return city;
 };
