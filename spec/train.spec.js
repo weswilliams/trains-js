@@ -1,9 +1,14 @@
 var routes = require('../index.js')('ab3 bc4');
 
 describe('routes', function() {
-  it('build routes', function() {
+  it('create route objects', function() {
     var route = routes.find_exact_route('a', 'b');
     expect(route.toString()).toEqual('ab3');
+  });
+
+  it('create route objects', function() {
+    var route = routes.find_exact_route('b', 'c');
+    expect(route.toString()).toEqual('bc4');
   });
 });
 

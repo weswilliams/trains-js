@@ -5,7 +5,17 @@ module.exports = function(routes_to_map) {
   routes_to_map = routes_to_map || '';
 
   routes.find_exact_route = function(origin, destination) {
-    return routes[0];
+    var found = {
+      toString: function() {
+        return 'NO SUCH ROUTE';
+      }
+    };
+    routes.forEach(function(route) {
+      if (route.origin === origin && route.destination === destination) {
+        found = route;
+      }
+    });
+    return found;
   };
 
   routes.route = function(origin, destination, distance) {
@@ -38,8 +48,17 @@ module.exports = function(routes_to_map) {
     return route;
   };
 
+  routes.city = function(name) {
+    var city = cities[name];
+    if (name === undefined) {
+      city = city(name);
+      cities[name] = city;
+    }
+    return city;
+  };
+
   (function(routes_to_map) {
-    var route_pattern = /[a-zA-Z]{2}\d/;
+    var route_pattern = /[a-zA-Z]{2}\d/g;
     routes_to_map.match(route_pattern).forEach(function(route_str) {
       routes.push( routes.route(route_str.charAt(0), route_str.charAt(1), parseInt(route_str.charAt(2), 10) ) );
     });
