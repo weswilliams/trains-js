@@ -10,6 +10,8 @@ module.exports = function(routes_to_map) {
         return 'NO SUCH ROUTE';
       }
     };
+    origin = cities[origin];
+    destination = cities[destination];
     routes.forEach(function(route) {
       if (route.origin === origin && route.destination === destination) {
         found = route;
@@ -49,18 +51,21 @@ module.exports = function(routes_to_map) {
   };
 
   routes.city = function(name) {
-    var city = cities[name];
-    if (name === undefined) {
-      city = city(name);
-      cities[name] = city;
+    var found = cities[name];
+    if (found === undefined) {
+      found = city(name);
+      cities[name] = found;
     }
-    return city;
+    return found;
   };
 
   (function(routes_to_map) {
     var route_pattern = /[a-zA-Z]{2}\d/g;
     routes_to_map.match(route_pattern).forEach(function(route_str) {
-      routes.push( routes.route(route_str.charAt(0), route_str.charAt(1), parseInt(route_str.charAt(2), 10) ) );
+      var origin = routes.city(route_str.charAt(0)),
+          destination = routes.city(route_str.charAt(1)),
+          distance = parseInt(route_str.charAt(2), 10);
+      routes.push(routes.route(origin, destination, distance));
     });
   })(routes_to_map);
 
@@ -70,5 +75,8 @@ module.exports = function(routes_to_map) {
 var city = function(name) {
   var city = {};
   city.name = name;
+  city.toString = function() {
+    return city.name;
+  };
   return city;
 };
