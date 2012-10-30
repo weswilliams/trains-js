@@ -89,6 +89,11 @@ module.exports = function(routes_to_map) {
       Object.keys(connections).forEach(function(key) {
         var connection = connections[key];
         found.push(routes.route(city, connection.city, connection.distance));
+        var connecting_routes = connection.city.all_routes(max_stops);
+        connecting_routes.forEach(function(connecting_route) {
+          var route_x = routes.route(city, connection.city, connection.distance);
+          found.push(route_x.connect_to(connecting_route));
+        });
       });
       return found;
     };

@@ -1,8 +1,12 @@
-var routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7');
+var routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7 gh8 hi9');
 
 describe('orgin to final destination routes', function() {
   it('finds all routes from a city with only direct connections', function() {
     expect(routes.find_routes_from('e').length).toEqual(1);
+  });
+
+  it('finds all routes from a city with connections that cannot continue', function() {
+    expect(routes.find_routes_from('g').length).toEqual(2);
   });
 });
 
