@@ -85,14 +85,13 @@ module.exports = function(routes_to_map) {
     };
 
     city.all_routes = function(max_stops) {
-      var found = [];
+      var found = [], connection, connecting_routes;
       Object.keys(connections).forEach(function(key) {
-        var connection = connections[key];
+        connection = connections[key];
         found.push(routes.route(city, connection.city, connection.distance));
-        var connecting_routes = connection.city.all_routes(max_stops);
+        connecting_routes = connection.city.all_routes(max_stops);
         connecting_routes.forEach(function(connecting_route) {
-          var route_x = routes.route(city, connection.city, connection.distance);
-          found.push(route_x.connect_to(connecting_route));
+          found.push(routes.route(city, connection.city, connection.distance).connect_to(connecting_route));
         });
       });
       return found;
