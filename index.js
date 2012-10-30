@@ -76,6 +76,10 @@ module.exports = function(routes_to_map) {
 
     city.name = name;
 
+    function build_route(origin, connection) {
+      return routes.route(origin, connection.city, connection.distance);
+    }
+
     city.add_connection = function(connection) {
       connections[connection.city] = connection;
     };
@@ -88,10 +92,10 @@ module.exports = function(routes_to_map) {
       var found = [], connection, connecting_routes;
       Object.keys(connections).forEach(function(key) {
         connection = connections[key];
-        found.push(routes.route(city, connection.city, connection.distance));
+        found.push(build_route(city, connection));
         connecting_routes = connection.city.all_routes(max_stops);
         connecting_routes.forEach(function(connecting_route) {
-          found.push(routes.route(city, connection.city, connection.distance).connect_to(connecting_route));
+          found.push(build_route(city, connection).connect_to(connecting_route));
         });
       });
       return found;
@@ -101,7 +105,7 @@ module.exports = function(routes_to_map) {
       var connection = connections[destinations[0]],
           route = null;
       if (connection !== undefined) {
-        route = routes.route(city, connection.city, connection.distance);
+        route = build_route(city, connection);
         route = city.build_connection_to(route, destinations.slice(1));
       }
       return route;
