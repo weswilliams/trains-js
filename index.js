@@ -80,11 +80,9 @@ module.exports = function(routes_to_map) {
     };
 
     city.exact_route_to = function(destinations) {
-      console.log('ex rt to: ' + destinations);
       var connection = connections[destinations[0]],
           route = null;
       if (connection !== undefined) {
-        console.log('connecting to: ' + connection);
         route = routes.route(city, connection.city, connection.distance);
         var remaining_destinations = destinations.slice(1);
         if (remaining_destinations.length > 0) {
