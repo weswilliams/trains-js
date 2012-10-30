@@ -87,7 +87,7 @@ module.exports = function(routes_to_map) {
         var remaining_destinations = destinations.slice(1);
         if (remaining_destinations.length > 0) {
           var connecting_route = destinations[0].exact_route_to(remaining_destinations);
-          if (connecting_route) {
+          if (destinations[0].connects_to(destinations[1])) {
             route.connect_to(connecting_route);
           } else {
             route = null;
@@ -95,6 +95,10 @@ module.exports = function(routes_to_map) {
         }
       }
       return route;
+    };
+
+    city.connects_to = function(other_city) {
+      return connections[other_city] !== undefined;
     };
 
     return city;
