@@ -93,8 +93,7 @@ module.exports = function(routes_to_map) {
       Object.keys(connections).forEach(function(key) {
         connection = connections[key];
         found.push(build_route(city, connection));
-        connecting_routes = connection.city.all_routes(max_stops);
-        connecting_routes.forEach(function(connecting_route) {
+        connection.city.all_routes(max_stops).forEach(function(connecting_route) {
           found.push(build_route(city, connection).connect_to(connecting_route));
         });
       });
