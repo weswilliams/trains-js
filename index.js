@@ -84,14 +84,17 @@ module.exports = function(routes_to_map) {
           route = null;
       if (connection !== undefined) {
         route = routes.route(city, connection.city, connection.distance);
-        var remaining_destinations = destinations.slice(1);
-        if (remaining_destinations.length > 0) {
-          if (destinations[0].connects_to(destinations[1])) {
-            route.connect_to(destinations[0].exact_route_to(remaining_destinations));
-          } else {
-            route = null;
-          }
-        }
+        route = city.build_connection_to(route, destinations.slice(1));
+      }
+      return route;
+    };
+
+    city.build_connection_to = function(route, remaining_destinations) {
+      if (remaining_destinations.length < 1) return route;
+      if (route.destination.connects_to(remaining_destinations[0])) {
+        route.connect_to(route.destination.exact_route_to(remaining_destinations));
+      } else {
+        route = null;
       }
       return route;
     };
