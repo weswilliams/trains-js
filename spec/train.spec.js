@@ -1,15 +1,21 @@
 var routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7 gh8 hi9');
 
 describe('orgin to final destination routes', function() {
-  it('finds all routes from a city with only direct connections', function() {
+  it('with max number of stops', function() {
+    expect(routes.find_routes('a', 'c', 5).length).toEqual(2);
+  });
+});
+
+describe('find all routes for an orgin', function() {
+  it('with only direct connections', function() {
     expect(routes.find_routes_from('e').length).toEqual(1);
   });
 
-  it('finds all routes from a city with connections that cannot continue', function() {
+  it('with connections that cannot continue', function() {
     expect(routes.find_routes_from('g').length).toEqual(2);
   });
 
-  it('finds all routes from a city with connections that can continue with maximum of 2 stops', function() {
+  it('with connections that can continue with maximum of 2 stops', function() {
     expect(routes.find_routes_from('a', 2).length).toEqual(2);
   });
 });

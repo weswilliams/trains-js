@@ -9,6 +9,13 @@ module.exports = function(routes_to_map) {
 
   routes_to_map = routes_to_map || '';
 
+  routes.find_routes = function(origin, destination, max_stops) {
+    destination = routes.city(destination);
+    return routes.find_routes_from(origin, max_stops).filter(function(route) {
+      return route.final_destination() === destination;
+    });
+  };
+
   routes.find_routes_from = function(origin, max_stops) {
     max_stops = max_stops || 10;
     return routes.city(origin).all_routes(max_stops);
