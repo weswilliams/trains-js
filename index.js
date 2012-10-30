@@ -86,7 +86,6 @@ module.exports = function(routes_to_map) {
         route = routes.route(city, connection.city, connection.distance);
         var remaining_destinations = destinations.slice(1);
         if (remaining_destinations.length > 0) {
-          var connecting_route = destinations[0].exact_route_to(remaining_destinations);
           if (destinations[0].connects_to(destinations[1])) {
             route.connect_to(destinations[0].exact_route_to(remaining_destinations));
           } else {
