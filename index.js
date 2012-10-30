@@ -88,12 +88,15 @@ module.exports = function(routes_to_map) {
       return city.name;
     };
 
-    city.all_routes = function(max_stops) {
+    city.all_routes = function(max_stops, number_of_stops) {
+      max_stops = max_stops || 10;
+      number_of_stops = number_of_stops || 1;
+      if(number_of_stops > max_stops) return [];
       var found = [], connection, connecting_routes;
       Object.keys(connections).forEach(function(key) {
         connection = connections[key];
         found.push(build_route(city, connection));
-        connection.city.all_routes(max_stops).forEach(function(connecting_route) {
+        connection.city.all_routes(max_stops, number_of_stops + 1).forEach(function(connecting_route) {
           found.push(build_route(city, connection).connect_to(connecting_route));
         });
       });

@@ -8,6 +8,10 @@ describe('orgin to final destination routes', function() {
   it('finds all routes from a city with connections that cannot continue', function() {
     expect(routes.find_routes_from('g').length).toEqual(2);
   });
+
+  it('finds all routes from a city with connections that can continue with maximum of 2 stops', function() {
+    expect(routes.find_routes_from('a', 2).length).toEqual(2);
+  });
 });
 
 describe('exact routes with no connections', function() {
