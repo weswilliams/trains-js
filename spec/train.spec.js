@@ -19,6 +19,10 @@ describe('exact routes with connections', function() {
   it('finds exact route for bcd', function() {
     expect(routes.find_exact_route('b', 'c', 'd').toString()).toEqual('bcd9');
   });
+
+  it('returns NO SUCH ROUTE for non existent routs', function() {
+    expect(routes.find_exact_route('b', 'c', 'e').toString()).toEqual('NO SUCH ROUTE');
+  });
 });
 
 describe('route', function() {
