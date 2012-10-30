@@ -9,6 +9,11 @@ module.exports = function(routes_to_map) {
 
   routes_to_map = routes_to_map || '';
 
+  routes.find_routes_from = function(origin, max_stops) {
+    max_stops = max_stops || 10;
+    return routes.city(origin).all_routes(max_stops);
+  };
+
   routes.find_exact_route = function() {
     var args = Array.prototype.slice.call(arguments);
     var route_cities = args.map(function(name) {
@@ -79,6 +84,15 @@ module.exports = function(routes_to_map) {
       return city.name;
     };
 
+    city.all_routes = function(max_stops) {
+      var found = [];
+      Object.keys(connections).forEach(function(key) {
+        var connection = connections[key];
+        found.push(routes.route(city, connection.city, connection.distance));
+      });
+      return found;
+    };
+
     city.exact_route_to = function(destinations) {
       var connection = connections[destinations[0]],
           route = null;
@@ -120,4 +134,14 @@ module.exports = function(routes_to_map) {
   })(routes_to_map);
 
   return routes;
+};
+
+Object.keys = function( obj ) {
+  var array = new Array();
+  for ( var prop in obj ) {
+    if ( obj.hasOwnProperty( prop ) ) {
+      array.push( prop );
+    }
+  }
+  return array;
 };

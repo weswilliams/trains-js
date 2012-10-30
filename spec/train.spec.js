@@ -1,4 +1,10 @@
-var routes = require('../index.js')('ab3 bc4 cd5');
+var routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7');
+
+describe('orgin to final destination routes', function() {
+  it('finds all routes from a city with only direct connections', function() {
+    expect(routes.find_routes_from('e').length).toEqual(1);
+  });
+});
 
 describe('exact routes with no connections', function() {
   it('finds exact route for ab', function() {
@@ -18,6 +24,10 @@ describe('exact routes with no connections', function() {
 describe('exact routes with connections', function() {
   it('finds exact route for bcd', function() {
     expect(routes.find_exact_route('b', 'c', 'd').toString()).toEqual('bcd9');
+  });
+
+  it('finds exact route for with duplicate station abca13', function() {
+    expect(routes.find_exact_route('a', 'b', 'c', 'a').toString()).toEqual('abca13');
   });
 
   it('returns NO SUCH ROUTE for non existent routs', function() {
