@@ -10,7 +10,7 @@ describe('orgin to final destination routes', function() {
   });
 
   it('to the shortest route', function() {
-    expect(routes.find_shortest_route('a','c').stops()).toEqual(2);
+    expect(routes.find_shortest_route('a','c').distance()).toEqual(7);
   });
 });
 

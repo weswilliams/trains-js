@@ -23,9 +23,9 @@ module.exports = function(routes_to_map) {
 
   routes.find_shortest_route = function(origin, destination) {
     return routes.find_routes(origin, destination).reduce(function(route1, route2) {
-      if (route1.stops() < route2.stops()) return route1;
+      if (route1.distance() < route2.distance()) return route1;
       return route2;
-    }, { stops: function() { return 999999; } });
+    }, { distance: function() { return 999999; } });
   };
 
   routes.find_routes_from = function(origin, max_stops) {
