@@ -24,20 +24,17 @@ module.exports = (routes_to_map) ->
     return routes.find_routes(origin, destination).reduce(shorter_route, long_distance_route)
 
   routes.find_routes_less_than = (origin, destination, max_distance) ->
-    return routes.find_routes(origin, destination).filter((route) ->
+    return routes.find_routes(origin, destination).filter (route) ->
       return route.distance() < max_distance
-    )
 
   routes.find_routes_from = (origin, max_stops) ->
     max_stops = max_stops || 10
     return routes.city(origin).all_routes(max_stops)
 
   routes.find_exact_route = (args...) ->
-    route_cities = args.map((name) ->
+    route_cities = args.map (name) ->
       return routes.city(name)
-    )
-    origin = route_cities[0]
-    return origin.exact_route_to(route_cities.slice(1)) || no_route
+    return route_cities[0].exact_route_to(route_cities.slice(1)) || no_route
 
   routes.route = (origin, destination, distance) ->
     route = {}
