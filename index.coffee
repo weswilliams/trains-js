@@ -20,8 +20,7 @@ module.exports = (routes_to_map) ->
     long_distance_route =
       distance: () -> return 999999
     shorter_route = (route1, route2) ->
-      if route1.distance() < route2.distance()
-        return route1
+      return route1 if route1.distance() < route2.distance()
       return route2
     return routes.find_routes(origin, destination).reduce(shorter_route, long_distance_route)
 
