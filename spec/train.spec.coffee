@@ -1,34 +1,27 @@
 routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7 gh8 hi9')
 
 describe 'orgin to final destination routes', () ->
-  it('with max number of stops', () ->
+  it 'with max number of stops', () ->
     expect(routes.find_routes('a', 'c', 5).length).toEqual(2)
-  )
 
-  it('with exact number of stops', () ->
+  it 'with exact number of stops', () ->
     expect(routes.find_routes_with_number_of_stops('a', 'c', 5).length).toEqual(1)
-  )
 
-  it('to the shortest route', () ->
+  it 'to the shortest route', () ->
     expect(routes.find_shortest_route('a','c').distance()).toEqual(7)
-  )
 
-  it('less than a certain distance', () ->
+  it 'less than a certain distance', () ->
     expect(routes.find_routes_less_than('a', 'c', 21).length).toEqual(2)
-  )
 
 describe 'all routes for an orgin', () ->
-  it('with only direct connections', () ->
+  it 'with only direct connections', () ->
     expect(routes.find_routes_from('e').length).toEqual(1)
-  )
 
-  it('with connections that cannot continue', () ->
+  it 'with connections that cannot continue', () ->
     expect(routes.find_routes_from('g').length).toEqual(2)
-  )
 
-  it('with connections that can continue with maximum of 2 stops', () ->
+  it 'with connections that can continue with maximum of 2 stops', () ->
     expect(routes.find_routes_from('a', 2).length).toEqual(2)
-  )
 
 describe 'exact routes with no connections', () ->
   it('finds exact route for ab', () ->
