@@ -2,9 +2,8 @@ module.exports = function(routes_to_map) {
   var routes = {},
       cities = {};
       no_route = {
-        toString: function() {
-          return 'NO SUCH ROUTE';
-        }
+        stops: function() { return 0; },
+        toString: function() { return 'NO SUCH ROUTE'; }
       };
 
   routes_to_map = routes_to_map || '';
@@ -20,6 +19,13 @@ module.exports = function(routes_to_map) {
     return routes.find_routes(origin, destination, number_of_stops).filter(function(route) {
       return route.stops() === number_of_stops;
     });
+  };
+
+  routes.find_shortest_route = function(origin, destination) {
+    return routes.find_routes(origin, destination).reduce(function(route1, route2) {
+      if (route1.stops() < route2.stops()) return route1;
+      return route2;
+    }, { stops: function() { return 999999; } });
   };
 
   routes.find_routes_from = function(origin, max_stops) {

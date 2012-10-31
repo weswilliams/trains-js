@@ -5,8 +5,12 @@ describe('orgin to final destination routes', function() {
     expect(routes.find_routes('a', 'c', 5).length).toEqual(2);
   });
 
-  it('with exact number of slots', function() {
+  it('with exact number of stops', function() {
     expect(routes.find_routes_with_number_of_stops('a', 'c', 5).length).toEqual(1);
+  });
+
+  it('to the shortest route', function() {
+    expect(routes.find_shortest_route('a','c').stops()).toEqual(2);
   });
 });
 
