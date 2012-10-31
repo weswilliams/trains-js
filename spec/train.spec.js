@@ -4,6 +4,10 @@ describe('orgin to final destination routes', function() {
   it('with max number of stops', function() {
     expect(routes.find_routes('a', 'c', 5).length).toEqual(2);
   });
+
+  it('with exact number of slots', function() {
+    expect(routes.find_routes_with_number_of_stops('a', 'c', 5).length).toEqual(1);
+  });
 });
 
 describe('all routes for an orgin', function() {

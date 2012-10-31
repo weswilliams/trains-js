@@ -16,6 +16,12 @@ module.exports = function(routes_to_map) {
     });
   };
 
+  routes.find_routes_with_number_of_stops = function(origin, destination, number_of_stops) {
+    return routes.find_routes(origin, destination, number_of_stops).filter(function(route) {
+      return route.stops() === number_of_stops;
+    });
+  };
+
   routes.find_routes_from = function(origin, max_stops) {
     max_stops = max_stops || 10;
     return routes.city(origin).all_routes(max_stops);
