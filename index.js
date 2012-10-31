@@ -28,7 +28,7 @@ module.exports = function(routes_to_map) {
     }, { distance: function() { return 999999; } });
   };
 
-  routes.find_route_less_than = function(origin, destination, max_distance) {
+  routes.find_routes_less_than = function(origin, destination, max_distance) {
     return routes.find_routes(origin, destination).filter(function(route) {
       return route.distance() < max_distance;
     });

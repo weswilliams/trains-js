@@ -14,7 +14,7 @@ describe('orgin to final destination routes', function() {
   });
 
   it('less than a certain distance', function() {
-    expect(routes.find_route_less_than('a', 'c', 21).length).toEqual(2);
+    expect(routes.find_routes_less_than('a', 'c', 21).length).toEqual(2);
   });
 });
 
