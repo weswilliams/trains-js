@@ -1,4 +1,4 @@
-routes = require('../index.js')('ab3 bc4 cd5 ca6 ef7 gh8 hi9')
+routes = require('../index.coffee')('ab3 bc4 cd5 ca6 ef7 gh8 hi9')
 
 describe 'orgin to final destination routes', () ->
   it 'with max number of stops', () ->

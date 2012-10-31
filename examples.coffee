@@ -1,4 +1,4 @@
-routes = require('./index.js')('AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7')
+routes = require('./index.coffee')('AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7')
 
 # 1. The distance of the route A-B-C.
 # Output #1: 9
