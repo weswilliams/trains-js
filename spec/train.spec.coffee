@@ -24,17 +24,14 @@ describe 'all routes for an orgin', () ->
     expect(routes.find_routes_from('a', 2).length).toEqual(2)
 
 describe 'exact routes with no connections', () ->
-  it('finds exact route for ab', () ->
+  it 'finds exact route for ab', () ->
     expect(routes.find_exact_route('a', 'b').toString()).toEqual('ab3')
-  )
 
-  it('finds exact route for bc', () ->
+  it 'finds exact route for bc', () ->
     expect(routes.find_exact_route('b', 'c').toString()).toEqual('bc4')
-  )
 
-  it('returns NO SUCH ROUTE for non existent routs', () ->
+  it 'returns NO SUCH ROUTE for non existent routs', () ->
     expect(routes.find_exact_route('a', 'c').toString()).toEqual('NO SUCH ROUTE')
-  )
 
 describe 'exact routes with connections', () ->
   it('finds exact route for bcd', () ->
