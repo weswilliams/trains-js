@@ -45,25 +45,20 @@ describe 'exact routes with connections', () ->
 
 describe 'route', () ->
   describe 'with no connections', () ->
-    it('have an origin', () ->
+    it 'have an origin', () ->
       expect(routes.route('a').origin).toEqual('a')
-    )
 
-    it('have a destination', () ->
+    it 'have a destination', () ->
       expect(routes.route('a', 'b').destination).toEqual('b')
-    )
 
-    it('have a distance', () ->
+    it 'have a distance', () ->
       expect(routes.route('a', 'b', 6).distance()).toEqual(6)
-    )
 
-    it('display origin, destination and distance', () ->
+    it 'display origin, destination and distance', () ->
       expect(routes.route('a','b',4).toString()).toEqual('ab4')
-    )
 
-    it('calculates the number of stops as 1', () ->
+    it 'calculates the number of stops as 1', () ->
       expect(routes.route('a','b', 6).stops()).toEqual(1)
-    )
 
   describe 'with connection', () ->
     route1 = null
