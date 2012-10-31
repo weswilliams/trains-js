@@ -8,10 +8,9 @@ module.exports = (routes_to_map) ->
   routes_to_map = routes_to_map || ''
 
   routes.find_routes = (origin, destination, max_stops) ->
-    destination = routes.city(destination)
-    return routes.find_routes_from(origin, max_stops).filter((route) ->
+    destination = routes.city destination
+    return routes.find_routes_from(origin, max_stops).filter (route) ->
       return route.final_destination() == destination
-    )
 
   routes.find_routes_with_number_of_stops = (origin, destination, number_of_stops) ->
     return routes.find_routes(origin, destination, number_of_stops).filter((route) ->
