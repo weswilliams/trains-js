@@ -6,7 +6,7 @@ describe('orgin to final destination routes', function() {
   });
 });
 
-describe('find all routes for an orgin', function() {
+describe('all routes for an orgin', function() {
   it('with only direct connections', function() {
     expect(routes.find_routes_from('e').length).toEqual(1);
   });
@@ -66,6 +66,10 @@ describe('route', function() {
     it('display origin, destination and distance', function() {
       expect(routes.route('a','b',4).toString()).toEqual('ab4');
     });
+
+    it('calculates the number of stops as 1', function() {
+      expect(routes.route('a','b', 6).stops()).toEqual(1);
+    });
   });
 
   describe('with connection', function() {
@@ -82,6 +86,11 @@ describe('route', function() {
 
     it('displays origin, final destination and total distance', function() {
       expect(route1.connect_to(route2).toString()).toEqual('abc11');
+    });
+
+    it('calculates the number of stops', function() {
+      route1.connect_to(route2);
+      expect(route1.stops()).toEqual(2);
     });
   });
 });

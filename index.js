@@ -34,6 +34,7 @@ module.exports = function(routes_to_map) {
     var route = {}, 
         connection = {};
 
+    connection.stops = function() { return 0; };
     connection.distance = function() { return 0; };
     connection.origins = function() { return ''; };
     connection.final_destination = function() { return null; };
@@ -41,6 +42,10 @@ module.exports = function(routes_to_map) {
 
     route.origin = origin;
     route.destination = destination;
+
+    route.stops = function() {
+      return 1 + connection.stops();
+    };
 
     route.distance = function() {
       return connection.distance() + distance;
