@@ -110,7 +110,6 @@ module.exports = (routes_to_map) ->
     city.build_connecting_routes = (max_stops, number_of_stops) ->
       found = []
       for name, connection of connections
-        console.log 'connecting ' + city.name + ' to ' + name
         found.push(build_route(city, connection))
         connection.city.all_routes(max_stops, number_of_stops).forEach((connecting_route) ->
           found.push(build_route(city, connection).connect_to(connecting_route))
