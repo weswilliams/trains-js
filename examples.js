@@ -26,6 +26,7 @@ console.log('Output #6: ' + routes.find_routes('C','C',3).length);
 
 // 7. The number of trips starting at A and ending at C with exactly 4 stops.  In the sample data below, there are three such trips: A to C (via B,C,D); A to C (via D,C,D); and A to C (via D,E,B).
 //Output #7: 3
+console.log('Output #6: ' + routes.find_routes_with_number_of_stops('A','C',4).length);
 
 // 8. The length of the shortest route (in terms of distance to travel) from A to C.
 //Output #8: 9
