@@ -34,17 +34,14 @@ describe 'exact routes with no connections', () ->
     expect(routes.find_exact_route('a', 'c').toString()).toEqual('NO SUCH ROUTE')
 
 describe 'exact routes with connections', () ->
-  it('finds exact route for bcd', () ->
+  it 'finds exact route for bcd', () ->
     expect(routes.find_exact_route('b', 'c', 'd').toString()).toEqual('bcd9')
-  )
 
-  it('finds exact route for with duplicate station abca13', () ->
+  it 'finds exact route for with duplicate station abca13', () ->
     expect(routes.find_exact_route('a', 'b', 'c', 'a').toString()).toEqual('abca13')
-  )
 
-  it('returns NO SUCH ROUTE for non existent routs', () ->
+  it 'returns NO SUCH ROUTE for non existent routs', () ->
     expect(routes.find_exact_route('b', 'c', 'e').toString()).toEqual('NO SUCH ROUTE')
-  )
 
 describe 'route', () ->
   describe 'with no connections', () ->
