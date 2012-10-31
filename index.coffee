@@ -150,10 +150,3 @@ module.exports = (routes_to_map) ->
   )(routes_to_map)
 
   return routes
-
-Object.keys = (obj) ->
-  array = []
-  for prop in obj
-    if obj.hasOwnProperty(prop)
-      array.push(prop)
-  return array
