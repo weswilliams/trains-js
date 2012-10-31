@@ -150,11 +150,9 @@ module.exports = function(routes_to_map) {
     city.build_connection_to = function(route, remaining_destinations) {
       if (remaining_destinations.length < 1) return route;
       if (route.destination.connects_to(remaining_destinations[0])) {
-        route.connect_to(route.destination.exact_route_to(remaining_destinations));
-      } else {
-        route = null;
+        return route.connect_to(route.destination.exact_route_to(remaining_destinations));
       }
-      return route;
+      return null;
     };
 
     city.connects_to = function(other_city) {
