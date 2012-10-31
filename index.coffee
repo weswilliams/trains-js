@@ -13,9 +13,8 @@ module.exports = (routes_to_map) ->
       return route.final_destination() == destination
 
   routes.find_routes_with_number_of_stops = (origin, destination, number_of_stops) ->
-    return routes.find_routes(origin, destination, number_of_stops).filter((route) ->
+    return routes.find_routes(origin, destination, number_of_stops).filter (route) ->
       return route.stops() == number_of_stops
-    )
 
   routes.find_shortest_route = (origin, destination) ->
     long_distance_route =
