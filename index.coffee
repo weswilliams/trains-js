@@ -38,13 +38,12 @@ module.exports = (routes_to_map) ->
 
   routes.route = (origin, destination, distance) ->
     route = {}
-    connection = {}
-
-    connection.stops = () -> return 0
-    connection.distance = () -> return 0
-    connection.origins = () -> return ''
-    connection.final_destination = () -> return null
-    connection.toString = () -> return 'end of the line'
+    connection =
+      stops: () -> return 0
+      distance: () -> return 0
+      origins: () -> return ''
+      final_destination: () -> return null
+      toString: () -> return 'end of the line'
 
     route.origin = origin
     route.destination = destination
