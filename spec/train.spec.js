@@ -12,6 +12,10 @@ describe('orgin to final destination routes', function() {
   it('to the shortest route', function() {
     expect(routes.find_shortest_route('a','c').distance()).toEqual(7);
   });
+
+  it('less than a certain distance', function() {
+    expect(routes.find_route_less_than('a', 'c', 21).length).toEqual(2);
+  });
 });
 
 describe('all routes for an orgin', function() {
