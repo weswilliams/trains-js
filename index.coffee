@@ -90,26 +90,23 @@ module.exports = (routes_to_map) ->
       for name, connection of connections
         found.push build_route(city, connection)
         connection.city.all_routes(max_stops, number_of_stops).forEach (connecting_route) ->
-          found.push(build_route(city, connection).connect_to(connecting_route))
+          found.push build_route(city, connection).connect_to(connecting_route)
       return found
 
     city.exact_route_to = (destinations) ->
       connection = connections[destinations[0]]
-      route = null
       if (connection != undefined)
-        route = build_route(city, connection)
-        route = city.build_connection_to(route, destinations.slice(1))
+        route = build_route city, connection
+        route = city.build_connection_to route, destinations.slice(1)
       return route
 
     city.build_connection_to = (route, remaining_destinations) ->
-      if remaining_destinations.length < 1
-        return route
+      return route if remaining_destinations.length < 1
       if route.destination.connects_to(remaining_destinations[0])
         return route.connect_to(route.destination.exact_route_to(remaining_destinations))
       return null
 
-    city.connects_to = (other_city) ->
-      return connections[other_city] != undefined
+    city.connects_to = (other_city) -> return connections[other_city] != undefined
 
     return city
 
