@@ -10,11 +10,11 @@ module.exports = (routes_to_map) ->
   routes.find_routes = (origin, destination, max_stops) ->
     destination = routes.city destination
     return routes.find_routes_from(origin, max_stops).filter (route) ->
-      return route.final_destination() == destination
+      return route.final_destination() is destination
 
   routes.find_routes_with_number_of_stops = (origin, destination, number_of_stops) ->
     return routes.find_routes(origin, destination, number_of_stops).filter (route) ->
-      return route.stops() == number_of_stops
+      return route.stops() is number_of_stops
 
   routes.find_shortest_route = (origin, destination) ->
     long_distance_route = distance: () -> return 999999
@@ -53,7 +53,7 @@ module.exports = (routes_to_map) ->
     route.distance = () -> return connection.distance() + distance
 
     route.connect_to = (connecting_route) ->
-      connection = connecting_route if connecting_route != null
+      connection = connecting_route if connecting_route isnt null
       return route
 
     route.origins = () -> return route.origin.toString() + connection.origins()
@@ -95,7 +95,7 @@ module.exports = (routes_to_map) ->
 
     city.exact_route_to = (destinations) ->
       connection = connections[destinations[0]]
-      if (connection != undefined)
+      if (connection isnt undefined)
         route = build_route city, connection
         route = city.build_connection_to route, destinations.slice(1)
       return route
@@ -106,7 +106,7 @@ module.exports = (routes_to_map) ->
         return route.connect_to(route.destination.exact_route_to(remaining_destinations))
       return null
 
-    city.connects_to = (other_city) -> return connections[other_city] != undefined
+    city.connects_to = (other_city) -> return connections[other_city] isnt undefined
 
     return city
 
