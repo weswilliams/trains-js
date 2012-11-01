@@ -48,22 +48,17 @@ module.exports = (routes_to_map) ->
     route.origin = origin
     route.destination = destination
 
-    route.stops = () ->
-      return 1 + connection.stops()
+    route.stops = () -> return 1 + connection.stops()
 
-    route.distance = () ->
-      return connection.distance() + distance
+    route.distance = () -> return connection.distance() + distance
 
     route.connect_to = (connecting_route) ->
-      if (connecting_route != null)
-        connection = connecting_route
+      connection = connecting_route if connecting_route != null
       return route
 
-    route.origins = () ->
-      return route.origin.toString() + connection.origins()
+    route.origins = () -> return route.origin.toString() + connection.origins()
 
-    route.final_destination = () ->
-      return connection.final_destination() || route.destination
+    route.final_destination = () -> return connection.final_destination() || route.destination
 
     route.toString = () ->
       return route.origins() + route.final_destination().toString() + route.distance().toString()
