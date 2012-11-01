@@ -106,7 +106,7 @@ module.exports = (routes_to_map) ->
         return route.connect_to(route.destination.exact_route_to(remaining_destinations))
       return null
 
-    city.connects_to = (other_city) -> return connections[other_city] isnt undefined
+    city.connects_to = (other_city) -> return connections[other_city]?
 
     return city
 
