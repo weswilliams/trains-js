@@ -2,70 +2,70 @@ module.exports = (routes_to_map) ->
   routes = {}
   cities = {}
   no_route =
-    stops: () -> return 0
-    toString: () -> return 'NO SUCH ROUTE'
+    stops: () -> 0
+    toString: () -> 'NO SUCH ROUTE'
 
   routes_to_map = routes_to_map or ''
 
   routes.find_routes = (origin, destination, max_stops) ->
     destination = routes.city destination
-    return routes.find_routes_from(origin, max_stops).filter (route) ->
-      return route.final_destination() is destination
+    routes.find_routes_from(origin, max_stops).filter (route) ->
+      route.final_destination() is destination
 
   routes.find_routes_with_number_of_stops = (origin, destination, number_of_stops) ->
-    return routes.find_routes(origin, destination, number_of_stops).filter (route) ->
-      return route.stops() is number_of_stops
+    routes.find_routes(origin, destination, number_of_stops).filter (route) ->
+      route.stops() is number_of_stops
 
   routes.find_shortest_route = (origin, destination) ->
-    long_distance_route = distance: () -> return 999999
+    long_distance_route = distance: () -> 999999
     shorter_route = (route1, route2) ->
       return route1 if route1.distance() < route2.distance()
-      return route2
-    return routes.find_routes(origin, destination).reduce(shorter_route, long_distance_route)
+      route2
+    routes.find_routes(origin, destination).reduce(shorter_route, long_distance_route)
 
   routes.find_routes_less_than = (origin, destination, max_distance) ->
-    return routes.find_routes(origin, destination).filter (route) ->
-      return route.distance() < max_distance
+    routes.find_routes(origin, destination).filter (route) ->
+      route.distance() < max_distance
 
   routes.find_routes_from = (origin, max_stops) ->
     max_stops = max_stops or 10
-    return routes.city(origin).all_routes(max_stops)
+    routes.city(origin).all_routes(max_stops)
 
   routes.find_exact_route = (args...) ->
     route_cities = args.map (name) ->
-      return routes.city(name)
-    return route_cities[0].exact_route_to(route_cities.slice(1)) or no_route
+      routes.city(name)
+    route_cities[0].exact_route_to(route_cities.slice(1)) or no_route
 
   routes.route = (origin, destination, distance) ->
     route = {}
     connection =
-      stops: () -> return 0
-      distance: () -> return 0
-      origins: () -> return ''
-      final_destination: () -> return null
-      toString: () -> return 'end of the line'
+      stops: () -> 0
+      distance: () -> 0
+      origins: () -> ''
+      final_destination: () -> null
+      toString: () -> 'end of the line'
 
     route.origin = origin
     route.destination = destination
 
-    route.stops = () -> return 1 + connection.stops()
+    route.stops = () -> 1 + connection.stops()
 
-    route.distance = () -> return connection.distance() + distance
+    route.distance = () -> connection.distance() + distance
 
     route.connect_to = (connecting_route) ->
       connection = connecting_route if connecting_route isnt null
-      return route
+      route
 
-    route.origins = () -> return route.origin.toString() + connection.origins()
+    route.origins = () -> route.origin.toString() + connection.origins()
 
-    route.final_destination = () -> return connection.final_destination() or route.destination
+    route.final_destination = () -> connection.final_destination() or route.destination
 
     route.toString = () ->
-      return route.origins() + route.final_destination().toString() + route.distance().toString()
+      route.origins() + route.final_destination().toString() + route.distance().toString()
 
-    return route
+    route
 
-  routes.city = (name) -> return cities[name] or cities[name] = build_city(name)
+  routes.city = (name) -> cities[name] or cities[name] = build_city(name)
 
   build_city = (name) ->
     city = {}
@@ -73,17 +73,17 @@ module.exports = (routes_to_map) ->
 
     city.name = name
 
-    build_route = (origin, connection) -> return routes.route origin, connection.city, connection.distance
+    build_route = (origin, connection) -> routes.route origin, connection.city, connection.distance
 
     city.add_connection = (connection) -> connections[connection.city] = connection
 
-    city.toString = () -> return city.name
+    city.toString = () -> city.name
 
     city.all_routes = (max_stops, number_of_stops) ->
       max_stops = max_stops or 10
       number_of_stops = number_of_stops or 1
       return [] if number_of_stops > max_stops
-      return city.build_connecting_routes max_stops, number_of_stops + 1
+      city.build_connecting_routes max_stops, number_of_stops + 1
 
     city.build_connecting_routes = (max_stops, number_of_stops) ->
       city_routes = []
@@ -91,24 +91,24 @@ module.exports = (routes_to_map) ->
         city_routes.push build_route(city, connection)
         connection.city.all_routes(max_stops, number_of_stops).forEach (connecting_route) ->
           city_routes.push build_route(city, connection).connect_to(connecting_route)
-      return city_routes
+      city_routes
 
     city.exact_route_to = (destinations) ->
       connection = connections[destinations[0]]
       if (connection isnt undefined)
         route = build_route city, connection
         route = city.build_connection_to route, destinations.slice(1)
-      return route
+      route
 
     city.build_connection_to = (route, remaining_destinations) ->
       return route if remaining_destinations.length < 1
       if route.destination.connects_to(remaining_destinations[0])
         return route.connect_to(route.destination.exact_route_to(remaining_destinations))
-      return null
+      null
 
     city.connects_to = (other_city) -> return connections[other_city]?
 
-    return city
+    city
 
   ((routes_to_map) ->
     route_pattern = /[a-zA-Z]{2}\d/g
@@ -121,4 +121,4 @@ module.exports = (routes_to_map) ->
         distance: distance
   )(routes_to_map)
 
-  return routes
+  routes
