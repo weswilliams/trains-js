@@ -86,12 +86,12 @@ module.exports = (routes_to_map) ->
       return city.build_connecting_routes max_stops, number_of_stops + 1
 
     city.build_connecting_routes = (max_stops, number_of_stops) ->
-      found = []
+      city_routes = []
       for name, connection of connections
-        found.push build_route(city, connection)
+        city_routes.push build_route(city, connection)
         connection.city.all_routes(max_stops, number_of_stops).forEach (connecting_route) ->
-          found.push build_route(city, connection).connect_to(connecting_route)
-      return found
+          city_routes.push build_route(city, connection).connect_to(connecting_route)
+      return city_routes
 
     city.exact_route_to = (destinations) ->
       connection = connections[destinations[0]]
