@@ -112,15 +112,13 @@ module.exports = (routes_to_map) ->
 
   ((routes_to_map) ->
     route_pattern = /[a-zA-Z]{2}\d/g
-    routes_to_map.match(route_pattern).forEach((route_str) ->
-      origin = routes.city(route_str.charAt(0))
-      destination = routes.city(route_str.charAt(1))
-      distance = parseInt(route_str.charAt(2), 10)
-      origin.add_connection(
+    routes_to_map.match(route_pattern).forEach (route_str) ->
+      origin = routes.city route_str.charAt(0)
+      destination = routes.city route_str.charAt(1)
+      distance = parseInt route_str.charAt(2), 10
+      origin.add_connection
         city: destination
         distance: distance
-      )
-    )
   )(routes_to_map)
 
   return routes
