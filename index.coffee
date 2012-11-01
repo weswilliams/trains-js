@@ -65,12 +65,7 @@ module.exports = (routes_to_map) ->
 
     return route
 
-  routes.city = (name) ->
-    found = cities[name]
-    if (found == undefined)
-      found = build_city(name)
-      cities[name] = found
-    return found
+  routes.city = (name) -> return cities[name] || cities[name] = build_city(name)
 
   build_city = (name) ->
     city = {}
