@@ -5,7 +5,7 @@ module.exports = (routes_to_map) ->
     stops: () -> return 0
     toString: () -> return 'NO SUCH ROUTE'
 
-  routes_to_map = routes_to_map || ''
+  routes_to_map = routes_to_map or ''
 
   routes.find_routes = (origin, destination, max_stops) ->
     destination = routes.city destination
@@ -28,13 +28,13 @@ module.exports = (routes_to_map) ->
       return route.distance() < max_distance
 
   routes.find_routes_from = (origin, max_stops) ->
-    max_stops = max_stops || 10
+    max_stops = max_stops or 10
     return routes.city(origin).all_routes(max_stops)
 
   routes.find_exact_route = (args...) ->
     route_cities = args.map (name) ->
       return routes.city(name)
-    return route_cities[0].exact_route_to(route_cities.slice(1)) || no_route
+    return route_cities[0].exact_route_to(route_cities.slice(1)) or no_route
 
   routes.route = (origin, destination, distance) ->
     route = {}
@@ -58,14 +58,14 @@ module.exports = (routes_to_map) ->
 
     route.origins = () -> return route.origin.toString() + connection.origins()
 
-    route.final_destination = () -> return connection.final_destination() || route.destination
+    route.final_destination = () -> return connection.final_destination() or route.destination
 
     route.toString = () ->
       return route.origins() + route.final_destination().toString() + route.distance().toString()
 
     return route
 
-  routes.city = (name) -> return cities[name] || cities[name] = build_city(name)
+  routes.city = (name) -> return cities[name] or cities[name] = build_city(name)
 
   build_city = (name) ->
     city = {}
@@ -80,8 +80,8 @@ module.exports = (routes_to_map) ->
     city.toString = () -> return city.name
 
     city.all_routes = (max_stops, number_of_stops) ->
-      max_stops = max_stops || 10
-      number_of_stops = number_of_stops || 1
+      max_stops = max_stops or 10
+      number_of_stops = number_of_stops or 1
       return [] if number_of_stops > max_stops
       return city.build_connecting_routes max_stops, number_of_stops + 1
 
