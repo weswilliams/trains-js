@@ -81,7 +81,8 @@ module.exports = (routes_to_map) ->
     city.all_routes = (max_stops, number_of_stops) ->
       max_stops = max_stops or 10
       number_of_stops = number_of_stops or 1
-      if number_of_stops > max_stops then [] else city.build_connecting_routes max_stops, number_of_stops + 1
+      if number_of_stops > max_stops then []
+      else city.build_connecting_routes max_stops, number_of_stops + 1
 
     city.build_connecting_routes = (max_stops, number_of_stops) ->
       city_routes = []
